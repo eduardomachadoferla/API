@@ -1,1 +1,1 @@
-[2024-11-05 12:28:22][error]: {"error":"SQLSTATE[42S22]: Column not found: 1054 Unknown column 'address' in 'where clause'"}
+[2024-11-05 12:34:39][error]: {"error":"SQLSTATE[42S22]: Column not found: 1054 Unknown column 'address' in 'where clause'"}

@@ -14,24 +14,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && empty($url[1])) {
         exit;
     } catch (PDOException $e) {
         logMe(['error' => $e->getMESSAGE()], 'error');
-        retorno(['error' => 'ops! ocorreu um erro ao tentar listar os enderecos'], 400);
+        retorno(['error' => 'ops! ocorreu um erro ao tentar listar os produtos'], 400);
         exit;
     }
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && !empty($url[1])) {
 
-    if ($url[1] === 'enderecos') {
+    if ($url[1] === 'produtos') {
         $cod_user = (int)$url[2];
         try {
             $stmt = $conn->prepare('SELECT * FROM address_user WHERE cod_user = :id');
-            $stmt->bindParam(':id', $enderecos);
+            $stmt->bindParam(':id', $produtos);
             $stmt->execute();
-            $enderecos = $stmt->fetch(PDO::FETCH_ASSOC);
-            retorno($enderecos);
+            $produtos = $stmt->fetch(PDO::FETCH_ASSOC);
+            retorno($produtos);
         } catch (PDOException $e) {
-            logME(['error' => 'endereços nao ancontrado. codigo =' . $enderecos], 'error');
-            retorno(['errror' => 'endereços nao encontrado.'], 400);
+            logME(['error' => 'produtos nao ancontrado. codigo =' . $produtos], 'error');
+            retorno(['errror' => 'produtos nao encontrado.'], 400);
             exit;
         }
     }
@@ -43,12 +43,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && !empty($url[1])) {
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':buscar', $buscar);
             $stmt->execute();
-            $enderecos = $stmt->fetchALL(PDO::FETCH_ASSOC);
-            retorno($enderecos);
+            $produtos = $stmt->fetchALL(PDO::FETCH_ASSOC);
+            retorno($produtos);
             exit;
         } catch (PDOException $e) {
             logMe(['error' => $e->getMessage()], 'error');
-            retorno(['error' => 'enderecos nao encontrado.'], 400);
+            retorno(['error' => 'produtos nao encontrado.'], 400);
             exit;
         }
     }
@@ -56,13 +56,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && !empty($url[1])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
     if (empty($data['name'])) {
-        logMe(['error' => ' o nome do endereco é obrigatorio'], 'error');
-        retorno(['error' => 'o nome do endereco é obrigatorio'], 400);
+        logMe(['error' => ' o nome do produtos é obrigatorio'], 'error');
+        retorno(['error' => 'o nome do produtos é obrigatorio'], 400);
         exit;
     }
     if (empty($data['email'])) {
         logMe(['error' => ' o email do edereco é obrigatorio'], 'error');
-        retorno(['error' => 'o email do endereco é obrigatorio'], 400);
+        retorno(['error' => 'o email do produtos é obrigatorio'], 400);
         exit;
     }
     $name = $data['name'];
@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     $data = json_decode(file_get_contents('php://input'), true);
 
     if (empty($data['name'])) {
-        retorno(['error' => 'o nome do endereco é obrigatorio'], 400);
+        retorno(['error' => 'o nome do produtos é obrigatorio'], 400);
         exit;
     }
 
@@ -119,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     $data = json_decode(file_get_contents('php://input'), true);
 
     if (empty($data['usuario_id'])) {
-        retorno(['error' => 'o id do endereco é obrigatorio'], 400);
+        retorno(['error' => 'o id do produtos é obrigatorio'], 400);
         exit;
     }
     $usuario_id = $data['usuario_id'];

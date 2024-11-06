@@ -14,24 +14,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && empty($url[1])) {
         exit;
     } catch (PDOException $e) {
         logMe(['error' => $e->getMESSAGE()], 'error');
-        retorno(['error' => 'ops! ocorreu um erro ao tentar listar os enderecos'], 400);
+        retorno(['error' => 'ops! ocorreu um erro ao tentar listar os categorias'], 400);
         exit;
     }
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && !empty($url[1])) {
 
-    if ($url[1] === 'enderecos') {
+    if ($url[1] === 'categorias') {
         $cod_user = (int)$url[2];
         try {
             $stmt = $conn->prepare('SELECT * FROM address_user WHERE cod_user = :id');
-            $stmt->bindParam(':id', $enderecos);
+            $stmt->bindParam(':id', $categorias);
             $stmt->execute();
-            $enderecos = $stmt->fetch(PDO::FETCH_ASSOC);
-            retorno($enderecos);
+            $categorias = $stmt->fetch(PDO::FETCH_ASSOC);
+            retorno($categorias);
         } catch (PDOException $e) {
-            logME(['error' => 'endereços nao ancontrado. codigo =' . $enderecos], 'error');
-            retorno(['errror' => 'endereços nao encontrado.'], 400);
+            logME(['error' => 'categorias nao ancontrado. codigo =' . $categorias], 'error');
+            retorno(['errror' => 'categorias nao encontrado.'], 400);
             exit;
         }
     }
@@ -43,12 +43,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && !empty($url[1])) {
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':buscar', $buscar);
             $stmt->execute();
-            $enderecos = $stmt->fetchALL(PDO::FETCH_ASSOC);
-            retorno($enderecos);
+            $categorias = $stmt->fetchALL(PDO::FETCH_ASSOC);
+            retorno($categorias);
             exit;
         } catch (PDOException $e) {
             logMe(['error' => $e->getMessage()], 'error');
-            retorno(['error' => 'enderecos nao encontrado.'], 400);
+            retorno(['error' => 'categorias nao encontrado.'], 400);
             exit;
         }
     }
@@ -56,13 +56,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && !empty($url[1])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
     if (empty($data['name'])) {
-        logMe(['error' => ' o nome do endereco é obrigatorio'], 'error');
-        retorno(['error' => 'o nome do endereco é obrigatorio'], 400);
+        logMe(['error' => ' o nome do categorias é obrigatorio'], 'error');
+        retorno(['error' => 'o nome do categorias é obrigatorio'], 400);
         exit;
     }
     if (empty($data['email'])) {
         logMe(['error' => ' o email do edereco é obrigatorio'], 'error');
-        retorno(['error' => 'o email do endereco é obrigatorio'], 400);
+        retorno(['error' => 'o email do categorias é obrigatorio'], 400);
         exit;
     }
     $name = $data['name'];
@@ -119,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     $data = json_decode(file_get_contents('php://input'), true);
 
     if (empty($data['usuario_id'])) {
-        retorno(['error' => 'o id do endereco é obrigatorio'], 400);
+        retorno(['error' => 'o id do categorias é obrigatorio'], 400);
         exit;
     }
     $usuario_id = $data['usuario_id'];
