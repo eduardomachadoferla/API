@@ -1,0 +1,1 @@
+[2024-11-07 16:53:23][error]: {"error":"SQLSTATE[42S22]: Column not found: 1054 Unknown column 'endereco' in 'where clause'"}
